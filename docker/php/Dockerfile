@@ -2,7 +2,7 @@ FROM php:8.0-fpm
 
 RUN apt update 
 
-RUN apt-get install -y libpq-dev \
+RUN apt-get install -y libpq-dev yarn \
     && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
     && docker-php-ext-install pdo pdo_pgsql pgsql \
     && apt install -y zlib1g-dev g++ git libicu-dev zip libzip-dev zip  \
