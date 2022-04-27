@@ -25,6 +25,13 @@ class Comment
     #[ORM\Column(type: 'datetime_immutable')]
     private $createdAt;
 
+    #[ORM\ManyToOne(targetEntity: Conference::class, inversedBy: 'comments')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $conference;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private $photoFilename;
+
 
 
     public function getId(): ?int
@@ -76,6 +83,30 @@ class Comment
     public function setCreatedAt(\DateTimeImmutable $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getConference(): ?Conference
+    {
+        return $this->conference;
+    }
+
+    public function setConference(?Conference $conference): self
+    {
+        $this->conference = $conference;
+
+        return $this;
+    }
+
+    public function getPhotoFilename(): ?string
+    {
+        return $this->photoFilename;
+    }
+
+    public function setPhotoFilename(string $photoFilename): self
+    {
+        $this->photoFilename = $photoFilename;
 
         return $this;
     }
