@@ -13,19 +13,19 @@ class Conference
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    private int $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $city;
+    private string $city;
 
     #[ORM\Column(type: 'string', length: 4)]
-    private $year;
+    private string $year;
 
     #[ORM\Column(type: 'boolean')]
-    private $isInternational;
+    private bool $isInternational;
 
     #[ORM\OneToMany(mappedBy: 'conference', targetEntity: Comment::class, orphanRemoval: true)]
-    private $comments;
+    private ArrayCollection $comments;
 
     public function __construct()
     {
