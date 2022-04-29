@@ -15,16 +15,17 @@ jobs:
     
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
-  #  - uses: shivammathur/setup-php@2cb9b829437ee246e9b3cac53555a39208ca6d28
-   #   with:
-   #     php-version: '8.0'
-    - name: ls
-      run: ls -l
-    - name: ls code
-      working-directory: ./code
-      run: ls -l 
-    - uses: actions/checkout@v1
+      uses: actions/checkout@v2
+    - name: Setup PHP Action
+    - uses: shivammathur/setup-php@2cb9b829437ee246e9b3cac53555a39208ca6d28
+      with:
+        php-version: '8.0'
+ #   - name: ls
+  #    run: ls -l
+   # - name: ls code
+  #    working-directory: ./code
+ #     run: ls -l 
+#    - uses: actions/checkout@v1
     - name: Setup Symfony
       working-directory: ./code
       run: cp .env.dev .env
