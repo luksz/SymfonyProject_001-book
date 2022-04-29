@@ -22,10 +22,13 @@ services:
       build:
         context: ./docker/postgres
       environment:
-       POSTGRES_DB: ${POSTGRES_DB:-symfony}
-         # You should definitely change the password in lubinproduction
-       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-ChangeMe}
-       POSTGRES_USER: ${POSTGRES_USER:-symfony}
+      #  POSTGRES_DB: ${POSTGRES_DB:-symfony}
+      #   #  You should definitely change the password in lubinproduction
+      #  POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-ChangeMe}
+      #  POSTGRES_USER: ${POSTGRES_USER:-root}
+       - POSTGRES_DB=symfony
+       - POSTGRES_PASSWORD=ChangeMe
+       - POSTGRES_USER=symfony
       ports:
         - "5432:5432"
       volumes:
@@ -48,6 +51,7 @@ services:
       - '8000:8000'
     volumes:
       - ./code:/var/www/html
+      - ./docker/db/data:/var/lib/postgresql/data:rw
     # entrypoint: ["chown","-R", "lukasz",  "/var/www/html"]
     networks:
       - symfony
