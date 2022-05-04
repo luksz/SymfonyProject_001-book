@@ -50,6 +50,5 @@
 
 # Embedded web-server pid file
 /.web-server-pid
-/.docker/db/*
-/docker/db/*
-docker/db/*
+/docker/db
+/public/uploads
