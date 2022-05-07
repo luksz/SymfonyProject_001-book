@@ -11,6 +11,9 @@
             "config/packages/test/dama_doctrine_test_bundle.yaml"
         ]
     },
+    "dbrekelmans/bdi": {
+        "version": "1.0"
+    },
     "doctrine/annotations": {
         "version": "1.13",
         "recipe": {
