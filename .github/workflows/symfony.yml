@@ -23,11 +23,11 @@ jobs:
       with:
         php-version: '8.0'
     - name: ls
-      run: ls -l
+      run: ls -la
    # - name: ls code
    #   working-directory: ./code
   #    run: ls -l 
-    - uses: actions/checkout@v1
+
     - name: Setup Symfony
   #    working-directory: ./code
       run: cp .env .env.local
