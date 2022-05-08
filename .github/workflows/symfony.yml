@@ -28,9 +28,12 @@ jobs:
       run: cp .env .env.local
     - name: Install Composer Dependencies
       run: composer install --prefer-dist
-      
-  my_second_job:
+
+  tests:
     runs-on: ubuntu-latest
     
-    name: My second job
+    steps:
+    - name: phpunit
+      run: bin/phpunit
+
 
