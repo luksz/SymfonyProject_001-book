@@ -20,17 +20,17 @@ jobs:
       uses: shivammathur/setup-php@2cb9b829437ee246e9b3cac53555a39208ca6d28
       with:
         php-version: '8.0'
- #   - name: ls
-  #    run: ls -l
+    - name: ls
+      run: ls -l
    # - name: ls code
-  #    working-directory: ./code
- #     run: ls -l 
-#    - uses: actions/checkout@v1
+   #   working-directory: ./code
+  #    run: ls -l 
+    - uses: actions/checkout@v1
     - name: Setup Symfony
-      working-directory: ./code
+  #    working-directory: ./code
       run: cp .env .env.local
     - name: Install Composer Dependencies
-      working-directory: ./code
+    #  working-directory: ./code
       run: composer install --prefer-dist
  #   - name: Run Tests
  #     working-directory: ./code
