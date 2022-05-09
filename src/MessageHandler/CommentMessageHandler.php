@@ -8,10 +8,14 @@ use App\Repository\CommentRepository;
 use App\SpamChecker;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use PhpParser\Node\Stmt\Nop;
 use Psr\Log\LoggerInterface;
+use Symfony\Bridge\Twig\Mime\NotificationEmail;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Workflow\WorkflowInterface;
+
 
 class CommentMessageHandler  implements MessageHandlerInterface
 {
@@ -21,6 +25,9 @@ class CommentMessageHandler  implements MessageHandlerInterface
     private MessageBusInterface $bus;
     private WorkflowInterface $workflow;
     private LoggerInterface $logger;
+    private string $adminEmail;
+    private MailerInterface $mailer;
+
 
     public function __construct(
         EntityManagerInterface $entityManager,
@@ -28,7 +35,9 @@ class CommentMessageHandler  implements MessageHandlerInterface
         SpamChecker $spamChecker,
         MessageBusInterface $bus,
         WorkflowInterface $commentStateMachine,
-        LoggerInterface $logger = null
+        LoggerInterface $logger = null,
+        string $adminEmail,
+        MailerInterface $mailer
     ) {
         $this->entityManager  = $entityManager;
         $this->commentRepository = $commentRepository;
@@ -37,6 +46,9 @@ class CommentMessageHandler  implements MessageHandlerInterface
         $this->bus = $bus;
         $this->logger = $logger;
         $this->workflow = $commentStateMachine;
+
+        $this->adminEmail = $adminEmail;
+        $this->mailer = $mailer;
     }
 
 
@@ -67,8 +79,17 @@ class CommentMessageHandler  implements MessageHandlerInterface
             $this->workflow->can($comment, Comment::PUBLISH_HAM)
         ) {
             $this->logger->debug('Comment Message CAN PUBLISH: ', ['comment' => $comment->getId(), 'state' => $comment->getState()]);
-            $this->workflow->apply($comment, $this->workflow->can($comment, Comment::PUBLISH) ? Comment::PUBLISH : Comment::PUBLISH_HAM);
-            $this->entityManager->flush();
+            // $this->workflow->apply($comment, $this->workflow->can($comment, Comment::PUBLISH) ? Comment::PUBLISH : Comment::PUBLISH_HAM);
+            // $this->entityManager->flush();
+            $this->mailer->send((new NotificationEmail())
+                    ->subject('New commend posted')
+                    ->html("body email")
+                    // ->htmlTemplate('emails/comment_notification.html.twig')
+                    // ->htmlTemplate('emails/comment_notification.html.twig')
+                    // ->from($this->adminEmail)
+                    ->to($this->adminEmail)
+                    ->context(['comment' => $comment])
+            );
             sleep(10);
         } elseif ($this->logger) {
             $this->logger->debug('Dropping comment message', ['comment' => $comment->getId(), 'state' => $comment->getState()]);
