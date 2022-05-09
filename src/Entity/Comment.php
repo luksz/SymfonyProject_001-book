@@ -15,6 +15,14 @@ class Comment
     const  PUBLISHED = 'published';
     const  SPAM = 'spam';
 
+
+
+    const ACCEPT = 'accept';
+    const REJECT_SPAM = 'reject_spam';
+    const MIGHT_BE_SPAM = 'might_be_spam';
+    const PUBLISH_HAM = 'publish_ham';
+    const PUBLISH = 'publish';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
@@ -47,9 +55,9 @@ class Comment
     private $state = self::SUBMITTED;
 
     public function __toString(): string
-       {
-           return (string) $this->getEmail();
-       }
+    {
+        return (string) $this->getEmail();
+    }
 
     public function getId(): ?int
     {
@@ -97,12 +105,12 @@ class Comment
         return $this->createdAt;
     }
 
-        #[ORM\PrePersist]
-        public function setCreatedAtValue()
-        {
-            $this->createdAt = new \DateTimeImmutable();
-        }
-    
+    #[ORM\PrePersist]
+    public function setCreatedAtValue()
+    {
+        $this->createdAt = new \DateTimeImmutable();
+    }
+
     public function setCreatedAt(\DateTimeImmutable $createdAt): self
     {
         $this->createdAt = $createdAt;
@@ -145,6 +153,4 @@ class Comment
 
         return $this;
     }
-
-  
 }
