@@ -22,6 +22,7 @@
         "symfony/flex": "^2",
         "symfony/framework-bundle": "6.0.*",
         "symfony/http-client": "6.0.*",
+        "symfony/mailer": "6.0.*",
         "symfony/maker-bundle": "^1.40",
         "symfony/mime": "6.0.*",
         "symfony/monolog-bundle": "^3.0",
