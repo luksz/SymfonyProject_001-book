@@ -50,6 +50,8 @@ services:
     ports:
       - '9000:9000'
       - '8000:8000'
+      # - '1025:1025'
+      # - '1080:1080'
     volumes:
       - .:/var/www/html
       - ./docker/db/data:/var/lib/postgresql/data:rw
@@ -68,6 +70,17 @@ services:
     networks:
       - symfony
   
+  mailer:
+    image: schickling/mailcatcher
+    container_name: project_mail
+    # environment:
+    #   # - VIRTUAL_HOST=mail.project.docker
+    #   - VIRTUAL_PORT=1080
+    ports: 
+      - '1025:1025' 
+      - '1080:1080'
+    networks:
+      - symfony
      
 networks:
     symfony:

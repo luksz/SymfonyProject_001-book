@@ -17,6 +17,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Workflow\WorkflowInterface;
 
 
+
 class CommentMessageHandler  implements MessageHandlerInterface
 {
     private EntityManagerInterface $entityManager;
@@ -55,11 +56,12 @@ class CommentMessageHandler  implements MessageHandlerInterface
     public function __invoke(CommentMessage $message)
     {
 
+
         $comment = $this->commentRepository->find($message->getId());
         if (!$comment) {
             return;
         }
-        sleep(10);
+        sleep(2);
         $this->logger->debug('Comment Message: ', ['comment' => $comment->getId(), 'state' => $comment->getState()]);
         if ($this->workflow->can($comment, Comment::ACCEPT)) {
             $this->logger->debug('Comment Message CAN ACCEPT: ', ['comment' => $comment->getId(), 'state' => $comment->getState()]);
@@ -83,10 +85,8 @@ class CommentMessageHandler  implements MessageHandlerInterface
             // $this->entityManager->flush();
             $this->mailer->send((new NotificationEmail())
                     ->subject('New commend posted')
-                    ->html("body email")
-                    // ->htmlTemplate('emails/comment_notification.html.twig')
-                    // ->htmlTemplate('emails/comment_notification.html.twig')
-                    // ->from($this->adminEmail)
+                    ->htmlTemplate('emails/comment_notification.html.twig')
+                    ->from($this->adminEmail)
                     ->to($this->adminEmail)
                     ->context(['comment' => $comment])
             );
