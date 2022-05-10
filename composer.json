@@ -32,7 +32,9 @@
         "symfony/webpack-encore-bundle": "^1.14",
         "symfony/workflow": "6.0.*",
         "symfony/yaml": "6.0.*",
+        "twig/cssinliner-extra": "^3.3",
         "twig/extra-bundle": "^3.3",
+        "twig/inky-extra": "^3.3",
         "twig/intl-extra": "^3"
     },
     "config": {
