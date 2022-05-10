@@ -22,6 +22,7 @@
         "symfony/flex": "^2",
         "symfony/framework-bundle": "6.0.*",
         "symfony/http-client": "6.0.*",
+        "symfony/mailer": "6.0.*",
         "symfony/maker-bundle": "^1.40",
         "symfony/mime": "6.0.*",
         "symfony/monolog-bundle": "^3.0",
@@ -31,7 +32,9 @@
         "symfony/webpack-encore-bundle": "^1.14",
         "symfony/workflow": "6.0.*",
         "symfony/yaml": "6.0.*",
+        "twig/cssinliner-extra": "^3.3",
         "twig/extra-bundle": "^3.3",
+        "twig/inky-extra": "^3.3",
         "twig/intl-extra": "^3"
     },
     "config": {

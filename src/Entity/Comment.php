@@ -19,6 +19,8 @@ class Comment
 
     const ACCEPT = 'accept';
     const REJECT_SPAM = 'reject_spam';
+    const REJECT_HAM = 'reject_ham';
+    const REJECT = 'reject';
     const MIGHT_BE_SPAM = 'might_be_spam';
     const PUBLISH_HAM = 'publish_ham';
     const PUBLISH = 'publish';
