@@ -124,6 +124,7 @@ RUN docker-php-ext-install xml
 # RUN docker-php-ext-install xmlrpc
 # RUN docker-php-ext-install xmlwriter             
 # idk bz2 enchant 
+RUN apt install -y graphviz
 
 WORKDIR /var/www/html
 
