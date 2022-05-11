@@ -31,25 +31,35 @@ class ConferenceController extends AbstractController
         $this->msgBus = $msgBus;
     }
 
-    #[Route('/conference', name: 'homepage',)]
-    public function index(Request $request, Environment $env, ConferenceRepository $conferenceRepository): Response
+
+    #[Route('/', name: 'homepage_index',)]
+    public function index(ConferenceRepository $conferenceRepository): Response
     {
-        return $this->render('conference/index.html.twig', [
-            // 'conferences' => $conferenceRepository->findAll()
-        ]);
+        return $this->redirectToRoute('homepage');
     }
 
-    private function sendPhotoToServer(FormInterface $form, string $photoDir, Comment &$comment)
+
+    #[Route('/conference', name: 'homepage')]
+    public function conference(ConferenceRepository $conferenceRepository): Response
     {
-        if ($photo = $form['photo']->getData()) {
-            $filename = bin2hex(random_bytes(6)) . '.' . $photo->guessExtension();
-            try {
-                $photo->move($photoDir, $filename);
-            } catch (FileException $e) {
-                throw new \Exception("Nie udało się wgrać pliku");
-            }
-            $comment->setPhotoFilename($filename);
-        }
+        $response =  $this->render('conference/index.html.twig', [
+            'conferences' => $conferenceRepository->findAll()
+        ]);
+        $response->setPublic();
+        $response->setSharedMaxAge(60);
+
+        return $response;
+    }
+
+    #[Route('/conference/header', name: 'conference_header')]
+    public function conferenceHeader(ConferenceRepository $conferenceRepository): Response
+    {
+        $response =  $this->render('conference/header.html.twig', [
+            'conferences' => $conferenceRepository->findAll(),
+        ]);
+        $response->setSharedMaxAge(60);
+
+        return $response;
     }
 
     #[Route('/conference/{slug}', name: 'conference')]
@@ -86,5 +96,18 @@ class ConferenceController extends AbstractController
             'next' => min(count($paginator), $offset + CommentRepository::PAGINATOR_PER_PAGE),
             'comment_form' => $form->createView()
         ]);
+    }
+
+    private function sendPhotoToServer(FormInterface $form, string $photoDir, Comment &$comment)
+    {
+        if ($photo = $form['photo']->getData()) {
+            $filename = bin2hex(random_bytes(6)) . '.' . $photo->guessExtension();
+            try {
+                $photo->move($photoDir, $filename);
+            } catch (FileException $e) {
+                throw new \Exception("Nie udało się wgrać pliku");
+            }
+            $comment->setPhotoFilename($filename);
+        }
     }
 }
