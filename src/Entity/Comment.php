@@ -24,6 +24,7 @@ class Comment
     const MIGHT_BE_SPAM = 'might_be_spam';
     const PUBLISH_HAM = 'publish_ham';
     const PUBLISH = 'publish';
+    const OPTIMIZE = 'optimize';
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
