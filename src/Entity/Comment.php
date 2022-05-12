@@ -73,6 +73,7 @@ class Comment
     private ?string $photoFilename = '';
 
     #[ORM\Column(type: 'string', length: 255, options: ["default" => self::SUBMITTED])]
+    #[Groups(['comment:list', 'comment:item'])]
     private $state = self::SUBMITTED;
 
     public function __toString(): string
