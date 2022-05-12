@@ -39,7 +39,7 @@ class AdminController extends AbstractController
         if ($workflow->can($comment, Comment::PUBLISH)) {
             $transition = $reject ? Comment::REJECT : Comment::PUBLISH;
         } elseif ($workflow->can($comment, Comment::PUBLISH_HAM)) {
-            $transition = $reject ? Comment::REJECT_HAM : Comment::PUBLISH;
+            $transition = $reject ? Comment::REJECT_HAM : Comment::PUBLISH_HAM;
         } else {
             return new Response('Comment already reviewed or not in the right state.');
         }
