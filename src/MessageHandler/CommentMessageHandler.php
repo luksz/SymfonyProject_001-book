@@ -5,6 +5,7 @@ namespace App\MessageHandler;
 use App\Entity\Comment;
 use App\ImageOptimizer;
 use App\Message\CommentMessage;
+use App\Notification\CommentReviewNotification;
 use App\Repository\CommentRepository;
 use App\SpamChecker;
 use Doctrine\ORM\EntityManager;
@@ -15,6 +16,8 @@ use Symfony\Bridge\Twig\Mime\NotificationEmail;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Notifier\NotifierInterface;
+use Symfony\Component\Notifier\Recipient\Recipient;
 use Symfony\Component\Workflow\WorkflowInterface;
 
 
@@ -31,6 +34,7 @@ class CommentMessageHandler  implements MessageHandlerInterface
     private MailerInterface $mailer;
     private ImageOptimizer $imageOptimizer;
     private string $photoDir;
+    private NotifierInterface $notifier;
 
     public function __construct(
         EntityManagerInterface $entityManager,
@@ -42,7 +46,8 @@ class CommentMessageHandler  implements MessageHandlerInterface
         string $adminEmail,
         MailerInterface $mailer,
         ImageOptimizer $imageOptimizer,
-        string $photoDir
+        string $photoDir,
+        NotifierInterface $notifier
     ) {
         $this->entityManager  = $entityManager;
         $this->commentRepository = $commentRepository;
@@ -57,13 +62,13 @@ class CommentMessageHandler  implements MessageHandlerInterface
 
         $this->imageOptimizer = $imageOptimizer;
         $this->photoDir = $photoDir;
+
+        $this->notifier = $notifier;
     }
 
 
     public function __invoke(CommentMessage $message)
     {
-
-
         $comment = $this->commentRepository->find($message->getId());
         if (!$comment) {
             return;
@@ -90,13 +95,15 @@ class CommentMessageHandler  implements MessageHandlerInterface
             $this->logger->debug('Comment Message CAN PUBLISH: ', ['comment' => $comment->getId(), 'state' => $comment->getState()]);
             // $this->workflow->apply($comment, $this->workflow->can($comment, Comment::PUBLISH) ? Comment::PUBLISH : Comment::PUBLISH_HAM);
             // $this->entityManager->flush();
-            $this->mailer->send((new NotificationEmail())
-                    ->subject('New commend posted')
-                    ->htmlTemplate('emails/comment_notification.html.twig')
-                    ->from($this->adminEmail)
-                    ->to($this->adminEmail)
-                    ->context(['comment' => $comment])
-            );
+            // $this->mailer->send((new NotificationEmail())
+            //         ->subject('New commend posted')
+            //         ->htmlTemplate('emails/comment_notification.html.twig')
+            //         ->from($this->adminEmail)
+            //         ->to($this->adminEmail)
+            //         ->context(['comment' => $comment])
+            // );
+
+            $this->notifier->send(new CommentReviewNotification($comment), $this->notifier->getAdminRecipients()[0]);
             sleep(10);
         } elseif ($this->workflow->can($comment, Comment::OPTIMIZE)) {
             if ($comment->getPhotoFilename()) {
