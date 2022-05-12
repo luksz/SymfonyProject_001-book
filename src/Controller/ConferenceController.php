@@ -34,14 +34,21 @@ class ConferenceController extends AbstractController
     }
 
 
+
     #[Route('/', name: 'homepage_index',)]
     public function index(ConferenceRepository $conferenceRepository): Response
+    {
+        return $this->redirectToRoute('homepage_index_locate', ['_locate' => 'en']);
+    }
+
+    #[Route('/{_locale<%app.supported_locales%>}/', name: 'homepage_index_locate',)]
+    public function index_locate(ConferenceRepository $conferenceRepository): Response
     {
         return $this->redirectToRoute('homepage');
     }
 
 
-    #[Route('/conference', name: 'homepage')]
+    #[Route('/{_locale<%app.supported_locales%>}/conference', name: 'homepage')]
     public function conference(ConferenceRepository $conferenceRepository): Response
     {
         $response =  $this->render('conference/index.html.twig', [
@@ -53,7 +60,7 @@ class ConferenceController extends AbstractController
         return $response;
     }
 
-    #[Route('/conference/header', name: 'conference_header')]
+    #[Route('/{_locale<%app.supported_locales%>}/conference/header', name: 'conference_header')]
     public function conferenceHeader(ConferenceRepository $conferenceRepository): Response
     {
         $response =  $this->render('conference/header.html.twig', [
@@ -64,7 +71,7 @@ class ConferenceController extends AbstractController
         return $response;
     }
 
-    #[Route('/conference/{slug}', name: 'conference')]
+    #[Route('/{_locale<%app.supported_locales%>}/conference/{slug}', name: 'conference')]
     public function show(
         Request $request,
         Conference $conference,
