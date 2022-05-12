@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="en" target-language="fr" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="eOy4.6V" resname="Conference Guestbook">
+        <source>Conference Guestbook</source>
+        <target>Livre d'Or pour Conferences</target>
+      </trans-unit>
+      <trans-unit id="TlZecGS" resname="Conference">
+        <source>Conference</source>
+        <target>__Conference</target>
+      </trans-unit>
+      <trans-unit id="pXsIpIC" resname="Previous">
+        <source>Previous</source>
+        <target>__Previous</target>
+      </trans-unit>
+      <trans-unit id="H.V6Kdf" resname="Next">
+        <source>Next</source>
+        <target>__Next</target>
+      </trans-unit>
+      <trans-unit id="7bokozx" resname="No comments have been posted yet for this conference.">
+        <source>No comments have been posted yet for this conference.</source>
+        <target>__No comments have been posted yet for this conference.</target>
+      </trans-unit>
+      <trans-unit id="ilFYXWP" resname="Add your own feedback">
+        <source>Add your own feedback</source>
+        <target>__Add your own feedback</target>
+      </trans-unit>
+      <trans-unit id="LNAVleg" resname="Give your feedback!">
+        <source>Give your feedback!</source>
+        <target>Donnez votre avis !</target>
+      </trans-unit>
+      <trans-unit id="3Mg5pAF" resname="View">
+        <source>View</source>
+        <target>Sélectionner</target>
+      </trans-unit>
+      <trans-unit id="xPzQ5iB" resname="Guestbook">
+        <source>Guestbook</source>
+        <target>__Guestbook</target>
+      </trans-unit>
+      <trans-unit id="maMQz7W" resname="nb_of_comments">
+        <source>nb_of_comments</source>
+        <target>{count, plural, =0 {Aucun commentaire.} =1 {1 commentaire.} other {# commentaires.}}</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

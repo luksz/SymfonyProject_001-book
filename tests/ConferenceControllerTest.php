@@ -13,7 +13,7 @@ class ConferenceControllerTest extends WebTestCase
     public function testIndex(): void
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', '/conference');
+        $crawler = $client->request('GET', '/en/conference');
 
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('h2', 'Give your feedback!');
@@ -25,7 +25,7 @@ class ConferenceControllerTest extends WebTestCase
         $client = static::createClient();
         $client->enableProfiler();
 
-        $crawler = $client->request('GET', '/conference/amsterdam-2019');
+        $crawler = $client->request('GET', '/en/conference/amsterdam-2019');
 
         $this->assertResponseIsSuccessful();
 
@@ -53,7 +53,7 @@ class ConferenceControllerTest extends WebTestCase
     public function testConferencePage()
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', '/conference');
+        $crawler = $client->request('GET', '/en/conference');
 
         $this->assertCount(2, $crawler->filter('h4'));
 
@@ -62,7 +62,7 @@ class ConferenceControllerTest extends WebTestCase
         $this->assertResponseIsSuccessful();
         $this->assertPageTitleContains('Amsterdam');
         $this->assertSelectorTextContains('h2', 'Amsterdam');
-        $this->assertSelectorExists('div:contains("There are 1 comments.")');
+        $this->assertSelectorExists('div:contains("There is one comment.")');
     }
 
     // public function testMailerAssertions()
